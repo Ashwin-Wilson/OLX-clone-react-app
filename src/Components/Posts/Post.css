@@ -36,7 +36,7 @@
   padding: 13px;
   max-width: 222px;
   width: 222px;
-  height: 270px;
+  height: fit-content;
   display: inline-block;
   cursor: pointer;
 }

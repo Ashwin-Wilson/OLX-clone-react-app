@@ -1,51 +1,94 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import './Create.css';
 import Header from '../Header/Header';
+import { storage } from '../../firebase/config';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { AuthContext } from '../../store/Context';
+import { db } from '../../firebase/config';
+import { useNavigate } from 'react-router-dom';
+import { collection, addDoc } from "firebase/firestore";
 
 const Create = () => {
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(AuthContext);
+  const [name, setName] = useState('');
+  const [category, setCategory] = useState('');
+  const [price, setPrice] = useState('');
+  const [image, setImage] = useState(null);
+  const date = new Date()
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    // console.log(user.uid);
+
+    const storageRef = ref(storage, `images/${image.name}`);
+    await uploadBytes(storageRef, image).then((snapshot) => {
+      // console.log('Uploaded a file!');
+      getDownloadURL(storageRef).then((url) => {
+        // console.log(url)
+        const product = {
+          uid: user.uid,
+          name,
+          category,
+          price,
+          imageURL: url,
+          date: date.toDateString()
+        }
+        addDoc(collection(db, "products"), product).then(() => {
+          // console.log(product);
+          navigate('/')
+        })
+      });
+    });
+
+  };
+
   return (
     <Fragment>
       <Header />
       <card>
         <div className="centerDiv">
-          <form>
+          <form onSubmit={handleCreate}>
             <label htmlFor="fname">Name</label>
             <br />
             <input
+              onChange={(e) => setName(e.target.value)}
               className="input"
               type="text"
               id="fname"
               name="Name"
-              defaultValue="John"
+              required="required"
+            
             />
             <br />
             <label htmlFor="fname">Category</label>
             <br />
             <input
+              onChange={(e) => setCategory(e.target.value)}
               className="input"
               type="text"
               id="fname"
               name="category"
-              defaultValue="John"
+              required="required" 
             />
             <br />
             <label htmlFor="fname">Price</label>
             <br />
-            <input className="input" type="number" id="fname" name="Price" />
+            <input onChange={(e) => setPrice(e.target.value)}
+              className="input" type="number" id="fname" name="Price" required="required"/>
             <br />
-          </form>
-          <br />
-          <img alt="Posts" width="200px" height="200px" src=""></img>
-          <form>
             <br />
-            <input type="file" />
+            <img  alt="Posts" width="200px" height="200px" src={image ? URL.createObjectURL(image) : ''} ></img>
             <br />
-            <button className="uploadBtn">upload and Submit</button>
+            <input onChange={(e) => {
+              setImage(e.target.files[0]);
+              // console.log(e.target.files[0]);
+            }} type="file" name='imageField' required />
+            <br />
+            <button className="uploadBtn" type='submit'>upload and Submit</button>
           </form>
         </div>
       </card>
     </Fragment>
   );
 };
-
 export default Create;
