@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
-import { FirebaseContext } from '../../store/Context';
 import Logo from '../../olx-logo.png';
 import './Signup.css';
 //firebase setups
@@ -41,13 +39,14 @@ export default function Signup() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        alert(errorCode,errorMessage);
 
       });
   }
   return (
     <div>
       <div className="signupParentDiv">
-        <img width="200px" height="200px" src={Logo}></img>
+        <img width="200px" height="200px" src={Logo} alt=''></img>
         <form onSubmit={handleSubmit}>
           <label htmlFor="fname">Username</label>
           <br />
@@ -100,7 +99,7 @@ export default function Signup() {
           <br />
           <button>Signup</button>
         </form>
-        <a onClick={()=>navigate('/login')}>Login</a>
+        <p onClick={()=>navigate('/login')}>Login</p>
       </div>
     </div>
   );

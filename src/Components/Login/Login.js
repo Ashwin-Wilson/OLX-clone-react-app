@@ -17,21 +17,21 @@ const [password , setPassword] = useState('');
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
       // Signed in 
-      const user = userCredential.user;
-      console.log('login successfull' +`${user}`);
+      // const user = userCredential.user;
+      // console.log('login successfull' +`${user}`);
       navigate('/');
       // ...
     })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        alert(errorMessage);
+        alert(errorMessage, errorCode);
       });
   }
   return (
     <div>
       <div className="loginParentDiv">
-        <img width="200px" height="200px" src={Logo}></img>
+        <img width="200px" height="200px" src={Logo} alt=''></img>
         <form onSubmit={handleLogin}>
           <label htmlFor="fname">Email</label>
           <br />
@@ -58,7 +58,7 @@ const [password , setPassword] = useState('');
           <br />
           <button>Login</button>
         </form>
-        <a onClick={()=>navigate('/signup')}>Signup</a>
+        <p onClick={()=>navigate('/signup')}>Signup</p>
       </div>
     </div>
   );

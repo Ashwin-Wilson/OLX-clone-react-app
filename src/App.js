@@ -12,7 +12,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from './firebase/config';
 
 function App() {
-  const { user, setUser } = useContext(AuthContext);
+  const {  setUser } = useContext(AuthContext);
   useEffect(() => {
     // console.log(user);
     onAuthStateChanged(auth, (user) => {

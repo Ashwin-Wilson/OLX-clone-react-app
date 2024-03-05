@@ -1,7 +1,7 @@
 import React, { useEffect, useState,useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 //firestore
-import { collection, doc, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from '../../firebase/config';
 import Heart from '../../assets/Heart';
 import { PostContext } from '../../store/PostContext';
@@ -9,7 +9,7 @@ import './Post.css';
 
 const Posts = () => {
   const [products, setProducts] = useState([]);
-  const { postDetails, setPostDetails } = useContext(PostContext);
+  const { setPostDetails } = useContext(PostContext);
   const navigate = useNavigate();
   useEffect(() => {
     getDocs(collection(db, "products")).then((querySnapshot) => {
@@ -47,7 +47,7 @@ const Posts = () => {
                     <p className="rate">&#x20B9; {obj.price}</p>
                     <h6>{obj.name}</h6>
                     <span className="kilometer">{obj.category}</span>
-                    <p className="name"> YAMAHA R15V3</p>
+                    {/* <p className="name"> YAMAHA R15V3</p> */}
                   </div>
                   <div className="date">
                     <span>{obj.date}</span>
