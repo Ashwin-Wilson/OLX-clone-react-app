@@ -10,6 +10,7 @@ import Search from '../../assets/Search';
 import Arrow from '../../assets/Arrow';
 import SellButton from '../../assets/SellButton';
 import SellButtonPlus from '../../assets/SellButtonPlus';
+import Dropdown from '../../assets/Dropdown';
 import { AuthContext } from '../../store/Context';
 function Header() {
   const { user } = useContext(AuthContext);
@@ -18,14 +19,14 @@ function Header() {
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
-        <div className="brandName">
+        <div className="brandName" onClick={()=>navigate('/')}>
           <OlxLogo></OlxLogo>
         </div>
-        <div className="placeSearch">
+        {/* <div className="placeSearch">
           <Search></Search>
           <input type="text" />
           <Arrow></Arrow>
-        </div>
+        </div> */}
         <div className="productSearch">
           <div className="input">
             <input
@@ -41,8 +42,8 @@ function Header() {
           <span> ENGLISH </span>
           <Arrow></Arrow>
         </div> */}
-        <div className="loginPage">
-          <span onClick={()=>{navigate('/login')}}>{user ? user.displayName : 'Login'}</span>
+        {/* <div className="loginPage">
+          <span>{user ? user.displayName : 'Login'}</span>
           <hr />
         </div>
         {user && <span onClick={() => {
@@ -52,15 +53,17 @@ function Header() {
             alert('error while logging out');
           })
         }
-        }>Logout</span>}
+        }>Logout</span>} */}
 
-        <div onClick={()=>{navigate('/create')}} className="sellMenu">
+        <div onClick={() => { navigate('/create') }} className="sellMenu">
           <SellButton></SellButton>
           <div className="sellMenuContent">
             <SellButtonPlus></SellButtonPlus>
             <span >SELL</span>
           </div>
         </div>
+      <Dropdown user={user}></Dropdown>
+
       </div>
     </div>
   );

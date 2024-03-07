@@ -15,13 +15,15 @@ const Create = () => {
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState(null);
+  const [disabled, setDisabled] = useState(false);
   const date = new Date()
-  const handleCreate = async (e) => {
+  const handleCreate = (e) => {
     e.preventDefault();
+    setDisabled(true);
     // console.log(user.uid);
 
     const storageRef = ref(storage, `images/${image.name}`);
-    await uploadBytes(storageRef, image).then((snapshot) => {
+    uploadBytes(storageRef, image).then((snapshot) => {
       // console.log('Uploaded a file!');
       getDownloadURL(storageRef).then((url) => {
         // console.log(url)
@@ -34,8 +36,8 @@ const Create = () => {
           date: date.toDateString()
         }
         addDoc(collection(db, "products"), product).then(() => {
+          navigate('/');
           // console.log(product);
-          navigate('/')
         })
       });
     });
@@ -57,7 +59,7 @@ const Create = () => {
               id="fname"
               name="Name"
               required="required"
-            
+
             />
             <br />
             <label htmlFor="fname">Category</label>
@@ -68,23 +70,23 @@ const Create = () => {
               type="text"
               id="fname"
               name="category"
-              required="required" 
+              required="required"
             />
             <br />
             <label htmlFor="fname">Price</label>
             <br />
             <input onChange={(e) => setPrice(e.target.value)}
-              className="input" type="number" id="fname" name="Price" required="required"/>
+              className="input" type="number" id="fname" name="Price" required="required" />
             <br />
             <br />
-            <img  alt="Posts" width="200px" height="200px" src={image ? URL.createObjectURL(image) : ''} ></img>
+            <img alt="Posts" width="200px" height="200px" src={image ? URL.createObjectURL(image) : ''} ></img>
             <br />
             <input onChange={(e) => {
               setImage(e.target.files[0]);
               // console.log(e.target.files[0]);
             }} type="file" name='imageField' required />
             <br />
-            <button className="uploadBtn" type='submit'>upload and Submit</button>
+            <button className="uploadBtn" type='submit' disabled={disabled} >upload and Submit</button>
           </form>
         </div>
       </card>

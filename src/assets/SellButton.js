@@ -1,9 +1,9 @@
 import React from 'react'
-
+import './style.css';
  export default function SellButton() {
     return(<svg
-        width={104}
-        height={48}
+        width={100}
+        height={50}
         viewBox="0 0 1603 768"
         className="_3V9PS"
       >

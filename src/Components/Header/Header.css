@@ -35,8 +35,8 @@
 }
 
 .productSearch {
-  width: 35em;
-  height: 48px;
+  width: 20rem;
+  height: 3rem;
   border: 2px solid #002f34;
   border-radius: 4px;
   display: flex;
@@ -142,7 +142,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 14px;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.5px;
   color: #002f34;
@@ -155,9 +155,10 @@
   margin-left: 5px;
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 500px) {
   .placeSearch,
   .productSearch{
     display: none;
   }
+  
 }
